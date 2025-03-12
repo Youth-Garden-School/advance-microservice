@@ -1,0 +1,28 @@
+# [const] Phiên bản cú pháp bắt buộc phải khai báo, nhưng giá trị cụ thể là do người dùng chọn
+version: '4'  # const: Từ khóa "version" là bắt buộc trong Docker Compose
+# var: Giá trị "4" có thể đổi thành '3.8', '3', v.v., tùy phiên bản bạn muốn dùng
+
+# [const] Phần khai báo dịch vụ là bắt buộc trong Docker Compose
+services:
+  # [var] Tên dịch vụ do người dùng tự đặt, có thể là bất kỳ tên gì (mongodb, db, database, v.v.)
+  mongodb:
+    # [let] Từ khóa "image" không bắt buộc nhưng thường cố định khi bạn muốn dùng image cụ thể
+    image: mongo:7.0.5  # let: "image" thường là cố định cho một dịch vụ cụ thể
+    # var: Giá trị "mongo:latest" có thể đổi thành "mongo:6.0", "mongo:5.0", hoặc image khác
+    
+    # [var] Tên container là tùy chọn, người dùng có thể đặt bất kỳ tên gì hoặc bỏ qua
+    container_name: mongodb  # var: "mongodb" có thể đổi thành "my-mongo", "db1", hoặc bất kỳ tên gì
+    
+    # [let] Ánh xạ cổng là tùy chọn nhưng thường cố định cho MongoDB nếu muốn truy cập từ ngoài
+    ports:
+      - "27017:27017"  # let: Cổng "27017" trong container là mặc định của MongoDB, ít ai thay đổi
+      # var: Cổng trên host (trái) có thể đổi thành "27018:27017", "30000:27017", v.v.
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONGO_INITDB_DATABASE: product-service
+    
+    # [let] Volume là tùy chọn nhưng thường cố định để lưu dữ liệu bền vững
+    volumes:
+      - ./data:/data/db  # var: "./data" hoàn toàn do người dùng quyết định (có thể là "/home/data", "./mongo-data", v.v.)
+      # let: "/data/db" là mặc định của MongoDB, có thể đổi nhưng cần cấu hình thêm (ví dụ: biến môi trường)
