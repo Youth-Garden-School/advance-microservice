@@ -20,6 +20,7 @@ ext {
 	lombokVersion = '1.18.34'
 	lombokMapstructBindingVersion = '0.2.0'
 	testContainersVersion = '1.20.2'
+	UUIDCreatorVersion = '5.1.0'
 }
 
 configurations {
@@ -36,7 +37,11 @@ dependencies {
 	// Spring Boot
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation "com.fasterxml.uuid:java-uuid-generator:${UUIDCreatorVersion}"
+
+
 
 	// MapStruct
 	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
